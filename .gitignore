@@ -1,2 +1,4 @@
 potw/db.sqlite3
 secrets.py
+.vscode
+__pycache__/
