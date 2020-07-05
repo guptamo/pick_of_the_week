@@ -4,11 +4,11 @@ import datetime
 
 class Contest(models.Model):
     theme = models.CharField(max_length=280)
-    pick_deadline = models.DateTimeField()
-    vote_deadline = models.DateTimeField()
+    pick_deadline = models.DateTimeField(null=True)
+    vote_deadline = models.DateTimeField(null=True)
     admin_id = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    spotify_playlist = models.SlugField()
-    youtube_playlist = models.SlugField()
+    spotify_playlist = models.SlugField(null=True)
+    youtube_playlist = models.SlugField(null=True)
 
     def get_status(self):
         if datetime.utcnow() < pick_deadline:
