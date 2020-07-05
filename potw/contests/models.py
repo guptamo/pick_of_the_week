@@ -7,8 +7,8 @@ class Contest(models.Model):
     pick_deadline = models.DateTimeField(null=True)
     vote_deadline = models.DateTimeField(null=True)
     admin_id = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    spotify_playlist = models.SlugField(null=True)
-    youtube_playlist = models.SlugField(null=True)
+    spotify_playlist = models.URLField(null=True)
+    youtube_playlist = models.URLField(null=True)
 
     def get_status(self):
         if datetime.utcnow() < pick_deadline:
