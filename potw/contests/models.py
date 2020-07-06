@@ -23,6 +23,7 @@ class Contest(models.Model):
 
 
 class Pick(models.Model):
+    contest_id = models.ForeignKey(Contest, on_delete=models.CASCADE)
     picked_by = models.CharField(max_length=280)
     artist = models.CharField(max_length=280)
     song = models.CharField(max_length=280)
