@@ -35,5 +35,5 @@ class Pick(models.Model):
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['contest_id', 'picked_by'],name='unique_by_contest_and_picked_by')
+            models.UniqueConstraint(fields=['contest_id', 'picked_by'], name='unique_by_contest_and_picked_by')
         ]
