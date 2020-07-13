@@ -1,19 +1,21 @@
 from django.db import models
+from django.utils import timezone
 from django.contrib.auth.models import User
-import datetime
+from datetime import datetime, timedelta
 
 class Contest(models.Model):
     theme = models.CharField(max_length=280)
-    pick_deadline = models.DateTimeField(null=True)
-    vote_deadline = models.DateTimeField(null=True)
+    pick_deadline = models.DateTimeField(default=datetime.utcnow() + timedelta(days=5))
+    vote_deadline = models.DateTimeField(
+        default=datetime.utcnow() + timedelta(days=7))
     admin_id = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     spotify_playlist = models.URLField(null=True)
     youtube_playlist = models.URLField(null=True)
 
     def get_status(self):
-        if datetime.utcnow() < pick_deadline:
+        if timezone.now() < self.pick_deadline:
             return 'picking'
-        elif pick_deadline < datetime.utcnow() < vote_deadline:
+        elif self.pick_deadline < timezone.now() < self.vote_deadline:
             return 'voting'
         else:
             return 'closed'
