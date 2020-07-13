@@ -3,7 +3,17 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from datetime import datetime, timedelta
 
+
+class League(models.Model):
+    admin_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=280)
+
+    def __str__(self):
+        return self.name
+
+
 class Contest(models.Model):
+    league_id = models.ForeignKey(League, null=True, on_delete=models.SET_NULL)
     theme = models.CharField(max_length=280)
     pick_deadline = models.DateTimeField(default=datetime.utcnow() + timedelta(days=5))
     vote_deadline = models.DateTimeField(
@@ -25,7 +35,7 @@ class Contest(models.Model):
 
 
 class Pick(models.Model):
-    contest_id = models.ForeignKey(Contest, on_delete=models.CASCADE)
+    contest_id = models.ForeignKey(Contest, on_delete=models.SET_NULL, null=True)
     picked_by = models.CharField(max_length=280)
     artist = models.CharField(max_length=280)
     song = models.CharField(max_length=280)
